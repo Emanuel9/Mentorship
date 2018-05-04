@@ -1,21 +1,26 @@
-console.log("Gaseste fisierul")
-//
-/////* 
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
-//
-//window.alert(123)
-const registerButton = $("#register_button");
-const password = $("#password");
-const password_confirmation = $("#password_confirmation");
+let registerButton = $("#register_button");
+//let password = $("#password").val();
+//let password_confirmation = $("#password_confirmation").val();
+//let message = $("#form_output");
+
+function validateEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
 
 registerButton.click(function(event){
-    event.preventDefault();
-    if(password !== password_confirmation){
-        window.alert("Passwords do not match!");
-    }
 
+    if(!validateEmail($("#email").val())){
+        document.getElementById("form_output").innerHTML="Incorrect email format";
+                event.preventDefault();
+    }else if($("#password").val() !== $("#password_confirmation").val()){
+        document.getElementById("form_output").innerHTML="Passwords don't match!";
+        event.preventDefault();
+    }else{
+        document.getElementById("form_output").innerHTML="Utilizatorul cu adresa de email " + $("#email").val() + " a fost creat cu succes!"
+    }
+    
 });
+
+
 
