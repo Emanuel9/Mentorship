@@ -5,6 +5,7 @@
  */
 package com.orange.otheatre.otheatre.entities;
 
+import com.orange.otheatre.otheatre.model.UserRole;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,8 +26,11 @@ public class Role {
     @Column(name = "role_id")
     private Integer roleId;
     
-    @Column( name = "role")
-    private String role;
+    @Column( name = "role", columnDefinition = "varchar(32) default 'PARTICIPANT'")
+    private UserRole role;
+
+    public Role() {
+    }
 
     public Integer getRoleId() {
         return roleId;
@@ -36,11 +40,11 @@ public class Role {
         this.roleId = roleId;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
-    }
+    }    
 }
