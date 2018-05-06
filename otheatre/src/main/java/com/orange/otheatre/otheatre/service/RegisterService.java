@@ -21,10 +21,14 @@ public class RegisterService {
     @Autowired
     private UserRepository userRepository;
     
+    private SecurePassword securePassword;
+    
     public User addUser(User user){
         if(user.getRole()==null){
             user.setRole(UserRole.PARTICIPANT);
         }
+        
+        user.setPassword(securePassword.hashPassword(user.getPassword()));
         return userRepository.save(user);
     }
     
