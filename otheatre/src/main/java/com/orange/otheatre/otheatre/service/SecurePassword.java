@@ -5,17 +5,15 @@
  */
 package com.orange.otheatre.otheatre.service;
 
-/**
- *
- * @author Marius Herta <marius.herta@gmail.com>
- */
+
 import java.security.*;
 import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Marius
+ * @author Marius Herta <marius.herta@gmail.com>
  */
+
 @Service
 public class SecurePassword {
     public String hashPassword(String password){

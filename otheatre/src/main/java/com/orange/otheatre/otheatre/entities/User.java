@@ -43,6 +43,12 @@ public class User {
     public User() {
         
     }
+    
+    public User(User user) {
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.role = user.getRole();
+    }
 
     public User(String email, String password, UserRole role) {
         this.email = email;
