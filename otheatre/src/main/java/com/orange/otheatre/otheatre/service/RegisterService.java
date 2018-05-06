@@ -21,6 +21,7 @@ public class RegisterService {
     @Autowired
     private UserRepository userRepository;
     
+    @Autowired
     private SecurePassword securePassword;
     
     public User addUser(User user){
