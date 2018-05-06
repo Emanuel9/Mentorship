@@ -10,6 +10,7 @@ import com.orange.otheatre.otheatre.model.UserRole;
 import com.orange.otheatre.otheatre.service.RegisterService;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class RegisterController {
     @Autowired
     private RegisterService registerService;
     
+//    @PreAuthorize("hasAnyRole('PLAY_ORGANIZER','ADMIN')")
     @RequestMapping(method = RequestMethod.GET, value = "/register")
     public String registerForm(){
         return "register";
