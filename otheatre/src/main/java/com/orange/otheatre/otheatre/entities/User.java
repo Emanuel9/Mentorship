@@ -5,8 +5,12 @@
  */
 package com.orange.otheatre.otheatre.entities;
 
+import com.orange.otheatre.otheatre.model.UserRole;
+import javax.management.relation.Role;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,21 +36,21 @@ public class User {
     @Column( name = "password") 
     private String password;
     
-    @OneToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private UserRole role = UserRole.PARTICIPANT;
 
     public User() {
         
     }
-    
-    public User(Integer userId, String email, String password, Role role) {
-        this.userId = userId;
+
+    public User(String email, String password, UserRole role) {
         this.email = email;
         this.password = password;
         this.role = role;
     }
     
+        
     public Integer getUserId() {
         return userId;
     }
@@ -71,12 +75,14 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(UserRole role) {
         this.role = role;
-    } 
+    }
+
+    
     
 }
