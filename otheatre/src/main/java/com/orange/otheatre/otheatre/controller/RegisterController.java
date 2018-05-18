@@ -22,26 +22,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class RegisterController {
-    
+
     @Autowired
     private RegisterService registerService;
-    
-//    @PreAuthorize("hasAnyRole('PLAY_ORGANIZER','ADMIN')")
+
+    //    @PreAuthorize("hasAnyRole('PLAY_ORGANIZER','ADMIN')")
     @RequestMapping(method = RequestMethod.GET, value = "/register")
     public String registerForm(){
         return "register";
     }
-    
+
     @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public String register(HttpServletRequest request, Model model){
+    public String register(HttpServletRequest request, Model model) throws InterruptedException{
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        
+
         User user = new User(email, password, UserRole.PARTICIPANT);
         registerService.addUser(user);
-        
-        model.addAttribute("email", email);
-        return "register_confirmation";
-       
+
+        Thread.sleep(5000);
+        return "redirect:/";
+
     }
 }
