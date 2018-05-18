@@ -9,6 +9,8 @@ import com.orange.otheatre.otheatre.entities.User;
 import com.orange.otheatre.otheatre.model.UserRole;
 import com.orange.otheatre.otheatre.service.RegisterService;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -28,19 +30,27 @@ public class RegisterController {
 
     //    @PreAuthorize("hasAnyRole('PLAY_ORGANIZER','ADMIN')")
     @RequestMapping(method = RequestMethod.GET, value = "/register")
-    public String registerForm(){
+    public String registerForm(HttpServletRequest request ){
+        if ( request.getUserPrincipal() != null ) {
+            return "redirect:/";
+        }
+
         return "register";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public String register(HttpServletRequest request, Model model) throws InterruptedException{
+    public String register(HttpServletRequest request, HttpSession session, Model model) throws InterruptedException{
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         User user = new User(email, password, UserRole.PARTICIPANT);
         registerService.addUser(user);
 
-        Thread.sleep(5000);
+        try {
+            request.login(user.getEmail(), user.getPassword());
+        } catch ( Exception ex ) {
+
+        }
         return "redirect:/";
 
     }

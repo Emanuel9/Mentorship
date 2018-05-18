@@ -24,7 +24,7 @@ public class RegisterService {
     @Autowired
     private SecurePassword securePassword;
     
-    public User addUser(User user){
+    public User addUser(User user) {
         if(user.getRole()==null){
             user.setRole(UserRole.PARTICIPANT);
         }
@@ -32,5 +32,9 @@ public class RegisterService {
         user.setPassword(securePassword.hashPassword(user.getPassword()));
         return userRepository.save(user);
     }
+
+
+
+
     
 }
