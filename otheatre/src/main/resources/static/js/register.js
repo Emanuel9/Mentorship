@@ -1,4 +1,4 @@
-let registerButton = $("#register_button");
+let loginButton = $("#login_button");
 //let password = $("#password").val();
 //let password_confirmation = $("#password_confirmation").val();
 //let message = $("#form_output");
@@ -8,7 +8,7 @@ function validateEmail(email) {
   return re.test(email);
 }
 
-registerButton.click(function(event){
+loginButton.click(function(event){
 
     if(!validateEmail($("#email").val())){
         document.getElementById("form_output").innerHTML="Incorrect email format";
