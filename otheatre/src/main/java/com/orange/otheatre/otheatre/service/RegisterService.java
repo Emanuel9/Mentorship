@@ -29,7 +29,7 @@ public class RegisterService {
             user.setRole(UserRole.PARTICIPANT);
         }
         
-        user.setPassword(securePassword.hashPassword(user.getPassword()));
+        user.setPassword(securePassword.passwordEncoder().encode(user.getPassword()));
         return userRepository.save(user);
     }
 

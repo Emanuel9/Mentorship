@@ -47,7 +47,7 @@ public class RegisterController {
         registerService.addUser(user);
 
         try {
-            request.login(user.getEmail(), user.getPassword());
+            request.login(email, password);
         } catch ( Exception ex ) {
 
         }
