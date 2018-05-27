@@ -26,11 +26,15 @@
         <li class="nav-item">
             <a class="nav-link" href="#">Past events</a>
         </li>
-        <li class="nav-item" sec:authorize="isAuthenticated()">
-            <span style="color: white;" th:text="Welcome +   ${principal.email}"></span>
-        </li>
-
     </ul>
+
+    <div sec:authorize="isAnonymous()">
+        <span style="color:white">Welcome! Login or register to be able to buy tickets and more.</span>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        <span style="color:white" th:text="'Welcome '+ ${principal.email}+'!'"></span>
+    </div>
 
     <ul>
         <div class="navbar-form navbar-right">
