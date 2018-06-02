@@ -5,12 +5,7 @@
  */
 package com.orange.otheatre.otheatre.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "comment")
@@ -19,6 +14,8 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer commentId;
+
+    @Column(name = "user_comment")
     private String userComent;
     
     @ManyToOne

@@ -1,25 +1,35 @@
 package com.orange.otheatre.otheatre.entities;
 
-import com.orange.otheatre.otheatre.model.EventCompositeKey;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
-import javax.persistence.*;
 
 @Entity
 @Table(name = "event")
-@IdClass(EventCompositeKey.class)
 public class Event implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "event_id")
+    private Long eventId;
+
+    @Column(name = "event_title", nullable = false)
     private String eventTitle;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private LocalDateTime eventDate;
-    
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "email")
+    private User eventOwner;
+
+    @Column(name = "event_start_date", nullable = false)
+    private LocalDateTime eventStartDate;
+
+    @Column(name = "event_end_date", nullable = false)
+    private LocalDateTime eventEndDate;
+
+    @Column(name = "event_description", nullable = false)
+    private String eventDescription;
+
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Review> eventReviews;
     
@@ -29,18 +39,37 @@ public class Event implements Serializable {
     @ManyToMany
     private List<UserProfile> participants;
 
-    @OneToOne
-    private Hall hall;
+    @ManyToMany ( cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "event_hall",
+    joinColumns = @JoinColumn( name = "event_id"),
+    inverseJoinColumns = @JoinColumn ( name = "hall_id"))
+    private List<Hall> halls;
 
     public Event() {
     }
 
-    public Event(String eventTitle, LocalDateTime eventDate, List<Review> eventReviews, List<Comment> eventComments, List<UserProfile> participants) {
+    public Event(Long eventId, String eventTitle, User eventOwner, LocalDateTime eventStartDate, LocalDateTime eventEndDate, String eventDescription, List<Review> eventReviews, List<Comment> eventComments, List<UserProfile> participants, List<Hall> halls) {
+        this.eventId = eventId;
         this.eventTitle = eventTitle;
-        this.eventDate = eventDate;
+        this.eventOwner = eventOwner;
+        this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
+        this.eventDescription = eventDescription;
         this.eventReviews = eventReviews;
         this.eventComments = eventComments;
         this.participants = participants;
+        this.halls = halls;
+    }
+
+    public String getEventDescription() {
+        return eventDescription;
+    }
+
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
     }
 
     public String getEventTitle() {
@@ -51,12 +80,28 @@ public class Event implements Serializable {
         this.eventTitle = eventTitle;
     }
 
-    public LocalDateTime getEventDate() {
-        return eventDate;
+    public User getEventOwner() {
+        return eventOwner;
     }
 
-    public void setEventDate(LocalDateTime eventDate) {
-        this.eventDate = eventDate;
+    public void setEventOwner(User eventOwner) {
+        this.eventOwner = eventOwner;
+    }
+
+    public LocalDateTime getEventStartDate() {
+        return eventStartDate;
+    }
+
+    public void setEventStartDate(LocalDateTime eventStartDate) {
+        this.eventStartDate = eventStartDate;
+    }
+
+    public LocalDateTime getEventEndDate() {
+        return eventEndDate;
+    }
+
+    public void setEventEndDate(LocalDateTime eventEndDate) {
+        this.eventEndDate = eventEndDate;
     }
 
     public List<Review> getEventReviews() {
@@ -83,18 +128,19 @@ public class Event implements Serializable {
         this.participants = participants;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return Objects.equals(eventTitle, event.eventTitle) &&
-                Objects.equals(eventDate, event.eventDate);
+    public Long getEventId() {
+        return eventId;
     }
 
-    @Override
-    public int hashCode() {
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
+    }
 
-        return Objects.hash(eventTitle, eventDate);
+    public List<Hall> getHalls() {
+        return halls;
+    }
+
+    public void setHalls(List<Hall> halls) {
+        this.halls = halls;
     }
 }

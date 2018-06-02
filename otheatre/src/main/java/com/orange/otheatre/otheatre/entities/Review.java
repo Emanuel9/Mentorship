@@ -6,18 +6,21 @@
 package com.orange.otheatre.otheatre.entities;
 
 import com.orange.otheatre.otheatre.model.Mark;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
 
 @Entity
+@Table(name = "review")
 public class Review {
 
     @Id
     @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
     private int id;
+
+    @Column(name = "written_review")
     private String writtenReview;
+
+    @Column(name = "user_score")
     private Mark userScore;
     
     @ManyToOne

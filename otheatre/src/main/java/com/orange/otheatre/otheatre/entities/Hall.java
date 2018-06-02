@@ -18,7 +18,8 @@ public class Hall {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int hallId;
+    @Column(name = "hall_id")
+    private Integer hallId;
 
     @Column(unique = true)
     private String hallName;
@@ -26,8 +27,8 @@ public class Hall {
     @OneToMany(mappedBy = "hall",cascade = CascadeType.ALL)
     private List<Seat>seats;
 
-    @OneToOne
-    private Event event;
+    @ManyToMany(mappedBy = "halls")
+    private List<Event> events;
 
     private Integer numberOfRows;
 
@@ -40,12 +41,25 @@ public class Hall {
         this.seats = seats;
     }
 
-    public Hall(String hallName, List<Seat> seats, Event event, Integer numberOfRows, Integer numberOfSeatsPerRow) {
+    public Hall(Integer hallId, String hallName, List<Seat> seats, List<Event> events, Integer numberOfRows, Integer numberOfSeatsPerRow) {
+        this.hallId = hallId;
         this.hallName = hallName;
         this.seats = seats;
-        this.event = event;
+        this.events = events;
         this.numberOfRows = numberOfRows;
         this.numberOfSeatsPerRow = numberOfSeatsPerRow;
+    }
+
+    public void setHallId(Integer hallId) {
+        this.hallId = hallId;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     public int getHallId() {
@@ -62,14 +76,6 @@ public class Hall {
 
     public void setSeats(List<Seat> seats) {
         this.seats = seats;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
     }
 
     public String getHallName() {

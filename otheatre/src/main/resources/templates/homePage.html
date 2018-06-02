@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Welcome, user!</title>
     <meta charset="utf-8">
@@ -18,10 +19,10 @@
             <a class="nav-link" th:href="@{/profile}">Profile</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">ManageEvents</a>
+            <a class="nav-link" th:href="@{/manageEvents}">ManageEvents</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Admin</a>
+            <a class="nav-link" th:href="@{/admin}">Admin</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Past events</a>
@@ -74,12 +75,24 @@
 </nav>
 
 <div class="container">
-    <p>
-    <ul class="list-group">
-        <li class="list-group-item">Event1</li>
-        <li class="list-group-item">Event2</li>
-        <li class="list-group-item">Event3</li>
-    </ul>
+    <h2>Events List</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Event title</th>
+            <th>Event description</th>
+            <th>Event start date</th>
+            <th>Event end date</th>
+            <th>Hall name</th>
+        </tr>
+        <tr th:each="event : ${events}">
+            <td th:text="${event.eventTitle}">event title</td>
+            <td th:text="${event.eventDescription}">event description</td>
+            <td th:text="${event.eventStartDate}">event start date</td>
+            <td th:text="${event.eventEndDate}">event end date</td>
+            <td th:text="${event.halls[0].hallName}">event hall name</td>
+            <!--<td th:text="${event.hall.hallName}">event hall</td>-->
+        </tr>
+    </table>
 </div>
 
 

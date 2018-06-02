@@ -2,8 +2,11 @@ package com.orange.otheatre.otheatre.controller;
 
 
 import com.orange.otheatre.otheatre.entities.User;
+import com.orange.otheatre.otheatre.repositories.EventRepository;
+import com.orange.otheatre.otheatre.repositories.HallRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -18,12 +21,21 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class HomeController {
 
+    @Autowired
+    EventRepository eventRepository;
+
+    @Autowired
+    HallRepository hallRepository;
+
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String homePage(HttpSession session, Model model) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
+
+        model.addAttribute("events", eventRepository.findAll());
+        model.addAttribute("halls", hallRepository.findAll());
 
         if ( SecurityContextHolder.getContext().getAuthentication() != null &&
                 SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&

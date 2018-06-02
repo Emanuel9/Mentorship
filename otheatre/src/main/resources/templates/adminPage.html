@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Admin</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div th:if="${not #lists.isEmpty(users)}">
+    <h2>Users List</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>UserID</th>
+            <th>E-mail address</th>
+            <th>Role</th>
+            <th>Change role</th>
+            <th>Apply changes</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <form th:action="@{/admin/ChangeRole}" th:method="PUT">
+                <td th:text="${user.userId}"></td>
+                <input type="hidden" name="forEmail" id="forEmail" th:value="${user.email}">
+                <td th:text="${user.email}" th:value="${user.email}"></td>
+                <td th:text="${user.role}"></td>
+                <td th:object="${userRole}" th:value="${userRole}">
+                    <select name ="newRole" id="newRole">
+                        <option th:each="userRole : ${userRoles}"
+                                th:value="${userRole}"
+                                th:text="${userRole}">
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    <button type="submit">Submit</button>
+
+                </td>
+            </form>
+        </tr>
+
+    </table>
+</div>
+
+</body>
+</html>
