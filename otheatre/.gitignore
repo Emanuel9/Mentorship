@@ -9,12 +9,14 @@ target/
 .settings
 .springBeans
 .sts4-cache
+*/logs/*
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+*/logs/*
 
 ### NetBeans ###
 nbproject/private/
@@ -23,3 +25,4 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+*/logs/*
