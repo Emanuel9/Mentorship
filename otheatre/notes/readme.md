@@ -36,7 +36,7 @@ solve some conflicts
 git rebase --continue
 git push  -f
 
-git rebaese -i develop
+git rebase -i develop
 squash commits
 git push -f
 
