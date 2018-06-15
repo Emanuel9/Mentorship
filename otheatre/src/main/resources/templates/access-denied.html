@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Access denied</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div>
+
+    <p> Your user, <span th:text="${principal.email}"></span>, does not have the right to access this page.
+        Please contact your system administrator!</p>
+
+
+</div>
+
+</body>
+</html>

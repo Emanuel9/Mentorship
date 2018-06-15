@@ -19,7 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableJpaRepositories(basePackageClasses = UserRepository.class)
 @Configuration
-public class TheatreSecurityConfiguration extends WebSecurityConfigurerAdapter{
+public class TheatreSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
@@ -27,19 +27,20 @@ public class TheatreSecurityConfiguration extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).
-              passwordEncoder(getPasswordEncoder());
+                passwordEncoder(getPasswordEncoder());
     }
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.
                 authorizeRequests()
+                .antMatchers("/admin/*").hasRole("ADMIN")
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-                .authenticated().and().csrf().disable().formLogin()
+                .anyRequest().authenticated()
+                .and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
                 .defaultSuccessUrl("/")
                 .usernameParameter("email")

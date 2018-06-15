@@ -21,15 +21,15 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService{
-    
+public class CustomUserDetailsService implements UserDetailsService {
+
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<User> optionalUser = userRepository.findByEmail(email);
-        
+
         optionalUser.orElseThrow(()-> new UsernameNotFoundException("Username was not found!"));
 
 
@@ -37,5 +37,5 @@ public class CustomUserDetailsService implements UserDetailsService{
                 .map(CustomUserDetails::new)
                 .get();
     }
-    
+
 }
