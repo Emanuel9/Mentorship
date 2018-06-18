@@ -101,4 +101,9 @@ public class Hall {
     public void setNumberOfSeatsPerRow(Integer numberOfSeatsPerRow) {
         this.numberOfSeatsPerRow = numberOfSeatsPerRow;
     }
+
+    @Override
+    public String toString() {
+        return  hallName;
+    }
 }

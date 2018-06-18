@@ -1,5 +1,7 @@
 package com.orange.otheatre.otheatre.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,12 +20,14 @@ public class Event implements Serializable {
     private String eventTitle;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "email")
+    @JoinColumn(name = "user_id")
     private User eventOwner;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "event_start_date", nullable = false)
     private LocalDateTime eventStartDate;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "event_end_date", nullable = false)
     private LocalDateTime eventEndDate;
 
