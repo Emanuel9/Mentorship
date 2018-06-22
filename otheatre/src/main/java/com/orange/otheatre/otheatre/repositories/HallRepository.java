@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HallRepository extends JpaRepository<Hall, Integer>, CrudRepository<Hall, Integer> {
+
+    Hall findByHallName(String hallName);
 }

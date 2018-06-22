@@ -24,9 +24,6 @@
         <li class="nav-item">
             <a class="nav-link" th:href="@{/admin}">Admin</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Past events</a>
-        </li>
     </ul>
 
     <div sec:authorize="isAnonymous()">
@@ -83,6 +80,7 @@
             <th>Event start date</th>
             <th>Event end date</th>
             <th>Hall name</th>
+            <th>Organiser</th>
         </tr>
         <tr th:each="event : ${events}">
             <td th:text="${event.eventTitle}">event title</td>
@@ -90,7 +88,7 @@
             <td th:text="${event.eventStartDate}">event start date</td>
             <td th:text="${event.eventEndDate}">event end date</td>
             <td th:text="${event.halls[0].hallName}">event hall name</td>
-            <!--<td th:text="${event.hall.hallName}">event hall</td>-->
+            <td th:text="${event.eventOwner.email}">organiser</td>
         </tr>
     </table>
 </div>
