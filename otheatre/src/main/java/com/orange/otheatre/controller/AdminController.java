@@ -3,6 +3,9 @@ package com.orange.otheatre.controller;
 import com.orange.otheatre.entities.User;
 import com.orange.otheatre.model.UserRole;
 import com.orange.otheatre.repositories.UserRepository;
+import com.orange.otheatre.service.CustomUserDetailsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -20,8 +23,10 @@ import java.util.Optional;
 @Controller
 public class AdminController {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
-    UserRepository userRepository;
+    CustomUserDetailsService userService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/admin")
     public String adminPage(HttpServletRequest request, Model model) {
@@ -29,8 +34,8 @@ public class AdminController {
         Authentication authentication = securityContext.getAuthentication();
 
         String email = request.getUserPrincipal().getName();
-        Optional<User> user = userRepository.findByEmail(email);
-        UserRole userRole = user.get().getRole();
+        User user = (User) userService.loadUserByUsername(email);
+        UserRole userRole = user.getRole();
 
         if (authentication != null) {
             Object principal = authentication.getPrincipal();
@@ -38,7 +43,7 @@ public class AdminController {
         }
 
         if (userRole.equals(UserRole.ADMIN)) {
-            model.addAttribute("users", userRepository.findAll());
+            model.addAttribute("users", userService.findAll());
             model.addAttribute("userRoles", UserRole.values());
             return "adminPage";
         }
@@ -46,16 +51,16 @@ public class AdminController {
         return "redirect:/access-denied";
     }
 
+
     @RequestMapping(method = RequestMethod.PUT, value="/admin/ChangeRole")
     public String changeRole(@RequestParam(value="forEmail") String email,
                              @RequestParam(value="newRole") UserRole newRole) {
         try {
-            Optional<User> optionalUser =userRepository.findByEmail(email);
-            User user = optionalUser.orElseThrow(()-> new UsernameNotFoundException("Username was not found!"));
+            User user = (User) userService.loadUserByUsername(email);
             user.setRole(newRole);
-            userRepository.saveAndFlush(user);
-        }catch (UsernameNotFoundException e) {
-
+            userService.saveUser(user);
+        }catch (Exception e) {
+                LOGGER.error(e.getMessage());
         }
         return "redirect:/";
     }

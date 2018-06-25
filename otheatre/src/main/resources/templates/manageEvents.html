@@ -34,7 +34,7 @@
             <td th:text="${event.eventStartDate}">event start date</td>
             <td th:text="${event.eventEndDate}">event end date</td>
             <td th:text="${event.halls[0].hallName}">event hall name</td>
-            <td th:text="${event.eventOwner.email}"> organizer </td>
+            <td th:text="${event.eventOwner.email}"> organizer</td>
         </tr>
     </table>
 </div>
@@ -42,6 +42,11 @@
 <hr/>
 
 <div>
+    <div th:if="${param.addEvent != null}" class="alert alert-danger">
+        <p th:text="${error}">error</p>
+    </div>
+    <h1>Form</h1>
+    <h1>Add a new event</h1>
     <h1>Form</h1>
     <form action="#" th:action="@{/manageEvents/addEvent}" th:object="${eventToAdd}" method="post">
         <p>Event title: <input type="text" th:field="*{eventTitle}"/></p>
@@ -49,13 +54,14 @@
         <p>Event start date: <input type="datetime-local" th:field="*{eventStartDate}"/></p>
         <p>Event end date: <input type="datetime-local" th:field="*{eventEndDate}"/></p>
         <p> Event hall
-            <select th:object= "${eventHall}" name = "eventHall" id = "eventHall">
-                <option th:each = "eventHall : ${hallsList}"
-                        th:value = "${eventHall}" th:text = "${eventHall}">
+            <select th:object="${eventHall}" name="eventHall" id="eventHall">
+                <option th:each="eventHall : ${hallsList}"
+                        th:value="${eventHall}" th:text="${eventHall}">
                 </option>
             </select>
         </p>
-        <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+        <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/>
+
     </form>
 </div>
 
