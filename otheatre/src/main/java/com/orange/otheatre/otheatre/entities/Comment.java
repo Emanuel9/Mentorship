@@ -16,7 +16,7 @@ public class Comment {
     private Integer commentId;
 
     @Column(name = "user_comment")
-    private String userComent;
+    private String userComment;
     
     @ManyToOne
     private Event event;
@@ -28,10 +28,11 @@ public class Comment {
 
     }
 
-    public Comment(String userComent, Event event, UserProfile reviewCreator) {
-        this.userComent = userComent;
+    public Comment(Integer commentId, String userComment, Event event, UserProfile commentCreator) {
+        this.commentId = commentId;
+        this.userComment = userComment;
         this.event = event;
-        this.commentCreator = reviewCreator;
+        this.commentCreator = commentCreator;
     }
 
     public Integer getCommentId() {
@@ -42,12 +43,12 @@ public class Comment {
         this.commentId = commentId;
     }
 
-    public String getUserComent() {
-        return userComent;
+    public String getUserComment() {
+        return userComment;
     }
 
-    public void setUserComent(String userComent) {
-        this.userComent = userComent;
+    public void setUserComment(String userComment) {
+        this.userComment = userComment;
     }
 
     public Event getEvent() {
@@ -58,13 +59,11 @@ public class Comment {
         this.event = event;
     }
 
-    public UserProfile getReviewCreator() {
+    public UserProfile getCommentCreator() {
         return commentCreator;
     }
 
-    public void setReviewCreator(UserProfile reviewCreator) {
-        this.commentCreator = reviewCreator;
+    public void setCommentCreator(UserProfile commentCreator) {
+        this.commentCreator = commentCreator;
     }
-    
-    
 }

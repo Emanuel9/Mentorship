@@ -156,6 +156,9 @@ public class UserProfile{
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return firstName;
+    }
 }
