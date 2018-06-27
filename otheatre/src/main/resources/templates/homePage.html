@@ -81,7 +81,6 @@
             <th>Event end date</th>
             <th>Hall name</th>
             <th>Organiser</th>
-            <th>Details</th>
         </tr>
         <tr th:each="event : ${events}">
             <td th:text="${event.eventTitle}">event title</td>
@@ -90,7 +89,6 @@
             <td th:text="${event.eventEndDate}">event end date</td>
             <td th:text="${event.halls[0].hallName}">event hall name</td>
             <td th:text="${event.eventOwner.email}">organiser</td>
-            <td><a th:href="@{'/event/' + ${event.eventId}}">View</a></td>
         </tr>
     </table>
 </div>
