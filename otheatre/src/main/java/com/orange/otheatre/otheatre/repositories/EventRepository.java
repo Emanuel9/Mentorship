@@ -11,5 +11,4 @@ import java.util.List;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long>, CrudRepository<Event, Long> {
     List<Event> findAllByEventOwner(User user);
-    List<Event> findAllByEventTitle(String event_title);
 }
