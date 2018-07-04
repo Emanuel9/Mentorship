@@ -1,28 +1,71 @@
 target/
+
 !.mvn/wrapper/maven-wrapper.jar
+
 logs
 
+
+
 ### STS ###
+
 .apt_generated
+
 .classpath
+
 .factorypath
+
 .project
+
 .settings
+
 .springBeans
+
 .sts4-cache
 
 
-### IntelliJ IDEA ###
-.idea
+
+
+
+.idea/
+
+
+
+# File-based project format
+
 *.iws
-*.iml
-*.ipr
+
+
+
+# IntelliJ
+
+out/
+
+
+
+# Editor-based Rest Client
+
+.idea/httpRequests
+
+
+
 
 
 ### NetBeans ###
+
 nbproject/private/
+
 build/
+
 nbbuild/
+
 dist/
+
 nbdist/
+
 .nb-gradle/
+
+
+
+
+
+.idea

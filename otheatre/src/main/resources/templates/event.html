@@ -3,13 +3,69 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Event page</title>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 
 </head>
 <body>
-
 <div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div class="container">
+    <h2>Event details</h2>
+    <table class="table table-striped">
+        <tr>
+            <th><h3>Event title</h3></th>
+            <td th:text = "${event.eventTitle}">Event title</td>
+        </tr>
+        <tr>
+            <th>Event start date</th>
+            <td th:text = "${event.eventStartDate}">Event start date</td>
+        </tr>
+        <tr>
+            <th>Event end date</th>
+            <td th:text = "${event.eventStartDate}">Event end date</td>
+        </tr>
+        <tr>
+            <th>Event description</th>
+            <td th:text = "${event.eventDescription}">Event description</td>
+        </tr>
+        <tr>
+            <th>Event hall</th>
+            <td th:text = "${event.halls[0].hallName}">Event hall</td>
+        </tr>
+    </table>
+</div>
+
+<div class="container">
+    <h2>Event reviews</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Written by</th>
+            <th>Score</th>
+            <th>Review</th>
+        </tr>
+        <tr th:each="review : ${reviews}">
+            <td th:text="${review.reviewCreator}">Written by</td>
+            <td th:text="${review.userScore}">Score</td>
+            <td th:text="${review.writtenReview}">Review</td>
+        </tr>
+    </table>
+</div>
+
+<div class="container">
+    <h2>Event comments</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Written by</th>
+            <th>Comment</th>
+        </tr>
+        <tr th:each="comment : ${comments}">
+            <td th:text="${comment.commentCreator}">Written by</td>
+            <td th:text="${comment.userComment}">Comment</td>
+        </tr>
+    </table>
+</div>
 
 
 </body>
