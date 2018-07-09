@@ -50,24 +50,24 @@
 
     </ul>
     <!--<ul class="nav navbar-nav navbar-right">-->
-        <!--&lt;!&ndash;<span th:text="Welcome ${email}"></span>&ndash;&gt;-->
+    <!--&lt;!&ndash;<span th:text="Welcome ${email}"></span>&ndash;&gt;-->
 
-        <!--<li sec:authorize="isAnonymous()">-->
-            <!--<a th:href="@{/login}">-->
-                <!--<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Log in-->
-            <!--</a>-->
-        <!--</li>-->
-        <!--<li sec:authorize="isAnonymous()">-->
-            <!--<a th:href="@{/register}">-->
-                <!--<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Register-->
-            <!--</a>-->
-        <!--</li>-->
-        <!--<li sec:authorize="isAuthenticated()">-->
-            <!--<form role="form" method="post" th:action="@{/logout}">-->
-                <!--<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;-->
-                <!--<button type="submit">Logout</button>-->
-            <!--</form>-->
-        <!--</li>-->
+    <!--<li sec:authorize="isAnonymous()">-->
+    <!--<a th:href="@{/login}">-->
+    <!--<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Log in-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--<li sec:authorize="isAnonymous()">-->
+    <!--<a th:href="@{/register}">-->
+    <!--<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Register-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--<li sec:authorize="isAuthenticated()">-->
+    <!--<form role="form" method="post" th:action="@{/logout}">-->
+    <!--<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;-->
+    <!--<button type="submit">Logout</button>-->
+    <!--</form>-->
+    <!--</li>-->
     <!--</ul>-->
 </nav>
 
@@ -81,6 +81,7 @@
             <th>Event end date</th>
             <th>Hall name</th>
             <th>Organiser</th>
+            <th>Details</th>
         </tr>
         <tr th:each="event : ${events}">
             <td th:text="${event.eventTitle}">event title</td>
@@ -89,6 +90,7 @@
             <td th:text="${event.eventEndDate}">event end date</td>
             <td th:text="${event.halls[0].hallName}">event hall name</td>
             <td th:text="${event.eventOwner.email}">organiser</td>
+            <td><a th:href="@{'/event/' + ${event.eventId}}">View</a></td>
         </tr>
     </table>
 </div>
