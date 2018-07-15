@@ -64,6 +64,9 @@
             <td th:text="${comment.commentCreator}">Written by</td>
             <td th:text="${comment.userComment}">Comment</td>
         </tr>
+        <tr>
+            <th><a th:href="@{'/comment/' + ${event.eventId}}">Add comment</a></th>
+        </tr>
     </table>
 </div>
 

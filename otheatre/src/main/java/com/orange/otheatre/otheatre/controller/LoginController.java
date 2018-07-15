@@ -23,7 +23,7 @@ public class LoginController {
             LOGGER.info("Login: The user is already logged in, redirecting to homepage");
             return "redirect:/";
         }
-        LOGGER.info("Login: The user is not logged in, displaying loginPage");
+        LOGGER.info("Login: The user is not logged in.");
         return "loginPage";
     }
 

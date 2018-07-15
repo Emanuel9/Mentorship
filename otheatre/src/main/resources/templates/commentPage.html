@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Event page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div class="container">
+    <h2>Comment</h2>
+    <table class="table table-striped">
+        <tr>
+            <th><h3>Comment for</h3></th>
+            <td th:text = "${event.eventTitle}">Event title</td>
+        </tr>
+    </table>
+</div>
+<div>
+    <span>You are posting this comment as: </span>
+    <span th:text = "${userProfile.firstName}">First Name</span>
+    <form action="#" th:action="@{/comment/addComment}" th:object="${commentToAdd}" method="post">
+        <p>Write your comment here: <input type="text" th:field="*{userComment}"/></p>
+        <p><input type="submit" value="Submit"/></p>
+    </form>
+</div>
+</body>
+</html>
