@@ -41,11 +41,11 @@ public class EventController {
             model.addAttribute("event",event);
             LOGGER.info("Event: Event entitled {} was put in model.", event.getEventTitle());
 
-            LOGGER.info("Event: Searching for all events entitled: ", event.getEventTitle());
+            LOGGER.info("Event: Searching for all events entitled: " + event.getEventTitle());
             eventList = eventRepository.findAllByEventTitle(event.getEventTitle());
             LOGGER.info("Event: Found {} events.", eventList.size());
 
-            LOGGER.info("Event: Searching for reviews and comments from all events entitled: ", event.getEventTitle());
+            LOGGER.info("Event: Searching for reviews and comments from all events entitled: " + event.getEventTitle());
             for(Event e : eventList){
                 reviewList.addAll(e.getEventReviews());
                 commentList.addAll(e.getEventComments());

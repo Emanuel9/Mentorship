@@ -35,9 +35,11 @@ public class TheatreSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.
                 authorizeRequests()
+
                 .antMatchers("/admin/*").hasRole("ADMIN")
                 .antMatchers("/").permitAll()
                 .antMatchers("/event/**").permitAll()
+                .antMatchers("/comment/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/register").permitAll()
                 .anyRequest().authenticated()

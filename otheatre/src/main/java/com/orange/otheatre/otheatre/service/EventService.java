@@ -11,8 +11,6 @@ public class EventService {
     EventRepository eventRepository;
 
     public Event saveEvent(Event event) {
-
         return eventRepository.saveAndFlush(event);
     }
-
 }
