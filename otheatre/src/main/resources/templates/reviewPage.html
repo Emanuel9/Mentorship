@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Review page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <meta name="viewport" content="initial-scale=1,width=device-width">
+    <link rel="stylesheet" th:href="@{/css/StarRating.css}">
+    <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="container">
+    <h2>Review</h2>
+    <table class="table table-striped">
+        <tr>
+            <th><h3>Review for</h3></th>
+            <td th:text = "${event.eventTitle}">Event title</td>
+        </tr>
+    </table>
+</div>
+<div>
+    <span>You are reviewing this event as: </span>
+    <span th:text = "${userProfile.firstName}">First Name</span>
+    <form action="#" th:action="@{/review/addReview/} + ${event.eventId}" th:object="${reviewToAdd}" method="post">
+        <p>Write your review here: <input type="text" th:field="*{writtenReview}"/></p>
+        <!--<p><input type="number" th:value="${value}" name="value">-->
+        <!--<x-star-rating value="3" number="5"></x-star-rating>-->
+        <p>Rating <input type="text" th:value="${mark}" name="mark"/></p>
+        <!--</input>-->
+        <!--</p>-->
+        <p><input type="submit" value="Submit"/></p>
+    </form>
+</div>
+<script type="text/javascript" th:src="@{/js/StarRating.js}"></script>
+
+</body>
+</html>

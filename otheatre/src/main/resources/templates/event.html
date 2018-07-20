@@ -50,6 +50,9 @@
             <td th:text="${review.userScore}">Score</td>
             <td th:text="${review.writtenReview}">Review</td>
         </tr>
+        <tr th:if="${displayReview} == true">
+            <th><a th:href="@{'/review/' + ${event.eventId}}">Add review</a></th>
+        </tr>
     </table>
 </div>
 
