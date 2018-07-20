@@ -44,9 +44,6 @@ public class CommentController {
     @Autowired
     UserProfileService userProfileService;
 
-    @Autowired
-    UserService userService;
-
     Event event;
 
     UserProfile userProfile;
@@ -54,11 +51,7 @@ public class CommentController {
     @RequestMapping(method = RequestMethod.GET,value = "/comment/{eventId}")
     public String viewCommentedEvent(@PathVariable(value="eventId") String eventId,
                                      Model model,
-                                     HttpSession session,
                                      HttpServletRequest request){
-
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        Authentication authentication = securityContext.getAuthentication();
 
         LOGGER.info("Comment: Welcome to CommentController. I am identifying the event that will be commented. It has the id:  " + eventId);
         Optional<Event> optionalEvent = eventRepository.findById(Long.parseLong(eventId));
@@ -80,25 +73,17 @@ public class CommentController {
                 if(optionalUserProfile.isPresent()){
                     userProfile = optionalUserProfile.get();
                     LOGGER.info("CommentPage: Found authenticated user: "+ userProfile.getFirstName());
+                    if(userProfile.getFirstName()== null){
+                        userProfile = userProfileService.showAnonymousName();
+                    }
+                }else{
+                    userProfile = userProfileService.showAnonymousName();
                 }
             } catch ( Exception ex ) {
-                LOGGER.debug("CommentPage: " + ex.getMessage());
+                LOGGER.error("CommentPage: " + ex.getMessage());
             }
         }else{
-            Optional<UserProfile> optionalUserProfile2 = userProfileRepository.findByFirstNameAndLastName("Anonymous","Anonymous");
-            if(optionalUserProfile2.isPresent()){
-                userProfile = optionalUserProfile2.get();
-                LOGGER.info("CommentPage: No authenticated user found, adding comment as Anonymous form database");
-            }else{
-                userProfile = new UserProfile();
-                User user = new User();
-                user.setEmail("dummy@dummy.com");
-                userProfile.setFirstName("Anonymous");
-                userProfile.setLastName("Anonymous");
-                userProfile.setUser(user);
-                userProfileService.saveUserProfile(userProfile);
-                LOGGER.info("CommentPage: No authenticated user found, creating an Anonymous user.");
-            }
+            userProfile = userProfileService.showAnonymousName();
         }
         model.addAttribute("userProfile", userProfile);
         model.addAttribute("commentToAdd", new Comment());
@@ -119,4 +104,5 @@ public class CommentController {
         LOGGER.info("CommentPage: A new comment for the play {} was added by {}.", event.getEventTitle(),userProfile.getFirstName());
         return "redirect:/event/"+event.getEventId();
     }
+
 }
