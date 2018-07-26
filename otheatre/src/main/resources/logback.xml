@@ -9,7 +9,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.orange.otheatre.otheatre" additivity="false" level="debug">
+    <logger name="com.orange.otheatre" additivity="false" level="debug">
         <appender-ref ref="STDOUT" />
     </logger>
 
@@ -32,7 +32,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.orange.otheatre.otheatre" additivity="false" level="debug">
+    <logger name="com.orange.otheatre" additivity="false" level="debug">
         <appender-ref ref="SAVE-TO-FILE" />
     </logger>
 
