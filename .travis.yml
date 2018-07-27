@@ -1,3 +1,5 @@
+before_script: cd otheatre
+
 language: java
 sudo: true
 jdk: oraclejdk8
@@ -8,4 +10,5 @@ jobs:
       script: ./mvnw clean install
 
 before_install:
+  - cd otheatre
   - chmod +x mvnw
