@@ -1,5 +1,3 @@
-before_script: cd otheatre
-
 language: java
 sudo: true
 jdk: oraclejdk8
