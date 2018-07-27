@@ -37,6 +37,7 @@ public class TheatreSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
 
                 .antMatchers("/admin/*").hasRole("ADMIN")
+                .antMatchers("/review/*").hasRole("PARTICIPANT")
                 .antMatchers("/api/**", "/swagger-ui.html").hasAnyRole("ADMIN","PARTICIPANT","PLAY_ORGANIZER")
                 .antMatchers("/").permitAll()
                 .antMatchers("/event/**").permitAll()
