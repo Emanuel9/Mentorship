@@ -55,5 +55,10 @@ public class SimpleTests {
         assertEquals(2,2);
     }
 
+    @Test
+    public void testSomething3() {
+        assertEquals(2,1);
+    }
+
 
 }
