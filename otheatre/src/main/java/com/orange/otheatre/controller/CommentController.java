@@ -93,9 +93,11 @@ public class CommentController {
                 userProfile = new UserProfile();
                 User user = new User();
                 user.setEmail("dummy@dummy.com");
+                user.setPassword(" ");
                 userProfile.setFirstName("Anonymous");
                 userProfile.setLastName("Anonymous");
                 userProfile.setUser(user);
+                userService.saveUser(user);
                 userProfileService.saveUserProfile(userProfile);
                 LOGGER.info("CommentPage: No authenticated user found, creating an Anonymous user.");
             }

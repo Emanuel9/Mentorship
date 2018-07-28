@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Event page</title>
@@ -49,6 +50,13 @@
             <td th:text="${review.reviewCreator}">Written by</td>
             <td th:text="${review.userScore}">Score</td>
             <td th:text="${review.writtenReview}">Review</td>
+        </tr>
+        <tr sec:authorize="isAnonymous()">
+            <span>Login to write your own review.</span>
+        </tr>
+        <tr sec:authorize="isAuthenticated()">
+            <th th:if="${displayReview} == true"><a th:href="@{'/review/' + ${event.eventId}}">Add a review</a></th>
+            <th th:if="${displayReview} == false">You can only leave a review for the plays you attended.</th>
         </tr>
     </table>
 </div>
