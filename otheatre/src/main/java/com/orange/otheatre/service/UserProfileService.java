@@ -60,6 +60,7 @@ public class UserProfileService {
         LOGGER.info("User Profile Service: Creating and returning the new profile for user {}.",userProfile.getUser().getEmail());
         return userProfileRepository.saveAndFlush(userProfile);
     }
+<<<<<<< HEAD
 
     public UserProfile updateUserProfile (UserProfile userProfile) throws Exception {
 
@@ -102,4 +103,6 @@ public class UserProfileService {
         LOGGER.info("User Profile Service: Returning profile for user {}",user.getEmail());
         return saveUserProfile(userProfile);
     }
+=======
+>>>>>>> Minor adjustments
 }
