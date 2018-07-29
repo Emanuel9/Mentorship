@@ -1,6 +1,5 @@
 package com.orange.otheatre.controller;
 
-import com.orange.otheatre.entities.Event;
 import com.orange.otheatre.entities.User;
 import com.orange.otheatre.entities.UserProfile;
 import com.orange.otheatre.repositories.UserProfileRepository;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
@@ -126,9 +123,11 @@ public class UserProfileController {
         userProfile.setBio(profileToEdit.getBio());
         userProfile.setBirthday(profileToEdit.getBirthday());
 
-        profileToEdit.setUser(user);
+
+//        profileToEdit.setUser(user);
         try {
-            userProfileService.updateUserProfile(userProfile);
+            userProfileService.saveUserProfile(userProfile);
+
         }catch(Exception ex){
             LOGGER.error("UserProfile: " + ex.getMessage());
         }
