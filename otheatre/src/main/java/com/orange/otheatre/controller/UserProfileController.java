@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import java.util.Optional;
 
 @Controller
@@ -107,6 +108,7 @@ public class UserProfileController {
     public String editUserProfile(@ModelAttribute UserProfile profileToEdit,
                                   Model model){
 
+
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
 
@@ -120,7 +122,6 @@ public class UserProfileController {
             }
         }
 
-
         Optional<UserProfile> optionalUserProfile = userProfileRepository.findByUser(user);
         UserProfile userProfile = optionalUserProfile.get();
 
@@ -128,8 +129,9 @@ public class UserProfileController {
         userProfile.setLastName(profileToEdit.getLastName());
         userProfile.setBio(profileToEdit.getBio());
 
-
         LOGGER.info("UserProfile - Updating profile for user with id: {}, userProfile with id: {}", user.getUserId(), userProfile.getUserProfileId());
+
+//        profileToEdit.setUser(user);
 
         try {
             userProfileService.saveUserProfile(userProfile);
@@ -139,6 +141,7 @@ public class UserProfileController {
 
         model.addAttribute("user",user);
         model.addAttribute("profileToEdit", userProfile);
+
         return "profile";
     }
 
