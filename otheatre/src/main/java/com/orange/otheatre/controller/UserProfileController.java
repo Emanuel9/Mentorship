@@ -126,9 +126,9 @@ public class UserProfileController {
         userProfile.setBio(profileToEdit.getBio());
         userProfile.setBirthday(profileToEdit.getBirthday());
 
-//        profileToEdit.setUser(user);
+        profileToEdit.setUser(user);
         try {
-            userProfileService.saveUserProfile(userProfile);
+            userProfileService.updateUserProfile(userProfile);
         }catch(Exception ex){
             LOGGER.error("UserProfile: " + ex.getMessage());
         }
