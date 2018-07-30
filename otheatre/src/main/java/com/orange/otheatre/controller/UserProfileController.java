@@ -134,7 +134,7 @@ public class UserProfileController {
 //        profileToEdit.setUser(user);
 
         try {
-            userProfileService.saveUserProfile(userProfile);
+            userProfileService.updateUserProfile(userProfile);
         }catch(Exception ex){
             LOGGER.error("UserProfile: " + ex.getMessage());
         }
