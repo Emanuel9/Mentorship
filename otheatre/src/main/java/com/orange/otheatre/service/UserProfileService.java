@@ -1,7 +1,6 @@
 package com.orange.otheatre.service;
 
-import com.orange.otheatre.entities.User;
-import com.orange.otheatre.entities.UserProfile;
+import com.orange.otheatre.entities.*;
 import com.orange.otheatre.repositories.CommentRepository;
 import com.orange.otheatre.repositories.UserProfileRepository;
 import org.slf4j.Logger;
@@ -9,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,10 +26,6 @@ public class UserProfileService {
     UserProfileService userProfileService;
 
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-
-    public UserProfile saveUserProfile(UserProfile userProfile){
-        return userProfileRepository.saveAndFlush(userProfile);
-    }
 
     public UserProfile showAnonymousName() {
         Optional<UserProfile> optionalUserProfile2 = userProfileRepository.findByFirstNameAndLastName("Anonymous", "Anonymous");
@@ -48,5 +46,60 @@ public class UserProfileService {
             LOGGER.info("CommentPage: No authenticated user found, creating an Anonymous user.");
         }
         return userProfile;
+    }
+
+    public UserProfile saveUserProfile(UserProfile userProfile){
+
+        Optional<UserProfile> optionalUserProfile = Optional.empty();
+        optionalUserProfile = checkIfProfileExists(userProfile);
+        if(optionalUserProfile.isPresent()){
+            LOGGER.info("User Profile Service: User {} already has a profile in the database. Returning profile from database.",userProfile.getUser().getEmail());
+            return optionalUserProfile.get();
+
+        }
+        LOGGER.info("User Profile Service: Creating and returning the new profile for user {}.",userProfile.getUser().getEmail());
+        return userProfileRepository.saveAndFlush(userProfile);
+    }
+
+    public UserProfile updateUserProfile (UserProfile userProfile) throws Exception {
+
+        Optional<UserProfile> optionalUserProfile = Optional.empty();
+        optionalUserProfile = checkIfProfileExists(userProfile);
+
+        if(!optionalUserProfile.isPresent()){
+            throw new Exception("Cannot update a profile that does not exist!");
+        }
+        LOGGER.info("User Profile Service: Returning the updated profile for user {}.",userProfile.getUser().getEmail());
+        return userProfileRepository.saveAndFlush(userProfile);
+    }
+
+    private Optional<UserProfile> checkIfProfileExists(UserProfile userProfile){
+        LOGGER.info("User Profile Service: Checking if profile for user {} exists",userProfile.getUser().getEmail());
+        return userProfileRepository.findByUser(userProfile.getUser());
+    }
+
+    public Optional<UserProfile> checkIfProfileExists(User user){
+        LOGGER.info("User Profile Service: Checking if profile for user {} exists",user.getEmail());
+        return userProfileRepository.findByUser(user);
+    }
+
+    public UserProfile createNewUserProfile(User user){
+        LOGGER.info("User Profile Service: Creating a new profile for user {}.",user.getEmail());
+        UserProfile userProfile = new UserProfile();
+
+        LOGGER.info("User Profile Service: Associating the user {} to the new profile.",user.getEmail());
+        userProfile.setUser(user);
+
+        LOGGER.info("User Profile Service: Adding an empty comments list to the new profile.");
+        userProfile.setComments(new ArrayList<Comment>());
+
+        LOGGER.info("User Profile Service: Adding an empty reviews list to the new profile.");
+        userProfile.setReviews(new ArrayList<Review>());
+
+        LOGGER.info("User Profile Service: Adding an empty events list to the new profile.");
+        userProfile.setEventsAttended(new ArrayList<Event>());
+
+        LOGGER.info("User Profile Service: Returning profile for user {}",user.getEmail());
+        return saveUserProfile(userProfile);
     }
 }
