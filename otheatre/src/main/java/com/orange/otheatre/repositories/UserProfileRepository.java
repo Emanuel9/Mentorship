@@ -6,10 +6,9 @@
 package com.orange.otheatre.repositories;
 
 import com.orange.otheatre.entities.User;
-import com.orange.otheatre.entities.UserProfile;
-
 import java.util.Optional;
 
+import com.orange.otheatre.entities.UserProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

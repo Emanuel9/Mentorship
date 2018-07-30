@@ -35,7 +35,4 @@
     <logger name="com.orange.otheatre" additivity="false" level="debug">
         <appender-ref ref="SAVE-TO-FILE" />
     </logger>
-
-
-
 </configuration>

@@ -48,7 +48,7 @@ public class HomeController {
                 model.addAttribute("principal", principal);
                 LOGGER.info("Homepage: Found authenticated user {}", principal.getEmail());
             } catch ( Exception ex ) {
-                LOGGER.debug("Homepage: " + ex.toString() + String.valueOf(ex.getStackTrace()));
+                LOGGER.error("Homepage: " + ex.toString() + String.valueOf(ex.getStackTrace()));
             }
         }
         LOGGER.info("Homepage: Displaying homePage.");
