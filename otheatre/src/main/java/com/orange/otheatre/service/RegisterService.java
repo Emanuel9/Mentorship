@@ -6,8 +6,12 @@
 package com.orange.otheatre.service;
 
 import com.orange.otheatre.entities.User;
+import com.orange.otheatre.entities.UserProfile;
 import com.orange.otheatre.model.UserRole;
+import com.orange.otheatre.repositories.UserProfileRepository;
 import com.orange.otheatre.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,22 +23,19 @@ import org.springframework.stereotype.Service;
 public class RegisterService {
     
     @Autowired
-    private UserRepository userRepository;
-    
+    private UserService userService;
+
     @Autowired
-    private SecurePassword securePassword;
+    private UserProfileService userProfileService;
+
+   private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     
     public User addUser(User user) {
-        if(user.getRole()==null){
-            user.setRole(UserRole.PARTICIPANT);
-        }
-        
-        user.setPassword(securePassword.passwordEncoder().encode(user.getPassword()));
-        return userRepository.save(user);
+        LOGGER.info("Register service: Registering the new user {}.", user.getEmail());
+        User userToBeReturned = new User();
+        userToBeReturned = userService.saveUser(user);
+        userProfileService.createNewUserProfile(userToBeReturned);
+        LOGGER.info("Register service: Registration for user {} is successful.", userToBeReturned.getEmail());
+        return userToBeReturned;
     }
-
-
-
-
-    
 }

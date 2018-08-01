@@ -11,6 +11,7 @@ import com.orange.otheatre.service.RegisterService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.orange.otheatre.service.SecurePassword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class RegisterController {
     @Autowired
     private RegisterService registerService;
 
+    @Autowired
+    private SecurePassword securePassword;
+
     //    @PreAuthorize("hasAnyRole('PLAY_ORGANIZER','ADMIN')")
     @RequestMapping(method = RequestMethod.GET, value = "/register")
     public String registerForm(HttpServletRequest request ){
@@ -45,21 +49,30 @@ public class RegisterController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public String register(HttpServletRequest request, HttpSession session, Model model) throws InterruptedException{
+    public String register(HttpServletRequest request) throws InterruptedException{
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         User user = new User(email, password, UserRole.PARTICIPANT);
-        registerService.addUser(user);
 
+        LOGGER.info("Register: Trying to create user {}", user.getEmail());
         try {
-            LOGGER.info("Register: Trying to create user {}", user.getEmail());
-            request.login(email, password);
-        } catch ( Exception ex ) {
-            LOGGER.debug("Register: "+ ex.toString() + String.valueOf(ex.getStackTrace()));
+            user = registerService.addUser(user);
+
+        } catch (Exception ex){
+            LOGGER.error("Register - add user: "+ ex.getMessage());
+            throw ex;
         }
 
-        LOGGER.info("Register: User {} was created successfully, redirecting to homepage", user.getEmail());
+
+        try {
+            LOGGER.info("Register: Trying to log in user {}.", user.getEmail());
+            request.login(user.getEmail(), password);
+        } catch ( Exception ex ) {
+            LOGGER.error("Register - login: "+ ex.getMessage());
+        }
+
+        LOGGER.info("Register: User {} was successfully created and logged in, redirecting to homepage", user.getEmail());
         return "redirect:/";
 
     }
