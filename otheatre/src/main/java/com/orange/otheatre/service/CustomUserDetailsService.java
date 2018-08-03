@@ -8,6 +8,8 @@ package com.orange.otheatre.service;
 import com.orange.otheatre.entities.User;
 import com.orange.otheatre.model.CustomUserDetails;
 import com.orange.otheatre.repositories.UserRepository;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,10 +34,20 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         optionalUser.orElseThrow(()-> new UsernameNotFoundException("Username was not found!"));
 
-
         return optionalUser
                 .map(CustomUserDetails::new)
                 .get();
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public User saveUser(User newUser) throws Exception {
+
+        userRepository.saveAndFlush(newUser);
+
+        return newUser;
     }
 
 }

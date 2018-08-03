@@ -22,13 +22,14 @@
             <th>Apply changes</th>
         </tr>
         <tr th:each="user : ${users}">
+
             <form th:action="@{/admin/ChangeRole}" th:method="PUT">
                 <td th:text="${user.userId}"></td>
                 <input type="hidden" name="forEmail" id="forEmail" th:value="${user.email}">
                 <td th:text="${user.email}" th:value="${user.email}"></td>
                 <td th:text="${user.role}"></td>
                 <td th:object="${userRole}" th:value="${userRole}">
-                    <select name ="newRole" id="newRole">
+                    <select th:if = "!${#strings.equals(user.role, 'ADMIN')}" name="newRole" id="newRole">
                         <option th:each="userRole : ${userRoles}"
                                 th:value="${userRole}"
                                 th:text="${userRole}">
@@ -36,10 +37,10 @@
                     </select>
                 </td>
                 <td>
-                    <button type="submit">Submit</button>
-
+                    <button th:if = "!${#strings.equals(user.role, 'ADMIN')}" type="submit">Submit</button>
                 </td>
             </form>
+
         </tr>
 
     </table>

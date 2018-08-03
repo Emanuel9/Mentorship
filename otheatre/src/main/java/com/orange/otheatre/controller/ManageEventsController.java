@@ -7,13 +7,16 @@ import com.orange.otheatre.model.UserRole;
 import com.orange.otheatre.repositories.EventRepository;
 import com.orange.otheatre.repositories.HallRepository;
 import com.orange.otheatre.repositories.UserRepository;
+import com.orange.otheatre.otheatre.service.CustomUserDetailsService;
 import com.orange.otheatre.service.EventService;
+import com.orange.otheatre.otheatre.service.HallService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/manageEvents")
@@ -30,16 +34,13 @@ public class ManageEventsController {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    UserRepository userRepository;
+    CustomUserDetailsService userService;
 
     @Autowired
-    EventRepository eventRepository;
+    HallService hallService;
 
     @Autowired
-    HallRepository hallRepository;
-
-    @Autowired
-    EventService saveEvent;
+    EventService eventService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String manageEventsPage(HttpServletRequest request, Model model) {
@@ -47,11 +48,12 @@ public class ManageEventsController {
         Authentication authentication = securityContext.getAuthentication();
 
         String email = request.getUserPrincipal().getName();
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " does not exist!"));
+        User user = (User) userService.loadUserByUsername(email);
         UserRole userRole = user.getRole();
 
         model.addAttribute("eventToAdd", new Event());
-        model.addAttribute("hallsList", hallRepository.findAll());
+        model.addAttribute("hallsList", hallService.findAll());
+        model.addAttribute("error", new Exception("Can't save event! Please try again").getMessage());
 
         if (authentication != null) {
             Object principal = authentication.getPrincipal();
@@ -59,12 +61,12 @@ public class ManageEventsController {
         }
 
         if (userRole.equals(UserRole.ADMIN)) {
-            model.addAttribute("events", eventRepository.findAll());
+            model.addAttribute("events", eventService.findAll());
             return "manageEvents";
         }
 
         if (userRole.equals(UserRole.PLAY_ORGANIZER)) {
-            model.addAttribute("events", eventRepository.findAllByEventOwner(user));
+            model.addAttribute("events", eventService.findAllByUser(user));
             return "manageEvents";
         }
 
@@ -75,29 +77,34 @@ public class ManageEventsController {
     @RequestMapping(method = RequestMethod.POST, value = "/addEvent")
     public String addEventSubmit(HttpServletRequest request,
                                  @ModelAttribute Event eventToAdd,
-                                 @RequestParam(value="eventHall") String hallName) {
-        if( hallName != null ){
+                                 @RequestParam(value = "eventHall") String hallName) {
+
+
+        if (hallName != null) {
             List<Hall> halls = new ArrayList<>();
-            Hall hall = hallRepository.findByHallName( hallName );
-            if ( hall != null ) {
+            Hall hall = hallService.findByHallName(hallName);
+            if (hall != null) {
                 halls.add(hall);
                 eventToAdd.setHalls(halls);
             }
         }
 
-        if ( request.getUserPrincipal() != null ) {
+        if (request.getUserPrincipal() != null) {
             String email = request.getUserPrincipal().getName();
-            User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " does not exist!"));
+            User user = (User) userService.loadUserByUsername(email);
             eventToAdd.setEventOwner(user);
         }
 
         try {
-             saveEvent.saveEvent(eventToAdd);
-        } catch ( Exception ex ) {
+            eventService.saveEvent(eventToAdd, hallName);
+            return "redirect:/manageEvents";
+        } catch (Exception ex) {
             LOGGER.error(ex.getMessage());
         }
 
-        return "redirect:/manageEvents";
+        return "redirect:/manageEvents?addEvent=failed";
+
+
     }
 
 }
