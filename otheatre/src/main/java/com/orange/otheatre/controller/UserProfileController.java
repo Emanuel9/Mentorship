@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import java.util.Optional;
 
 @Controller
@@ -90,30 +89,36 @@ public class UserProfileController {
 
         if(optionalUserProfile.isPresent()){
             userProfile = optionalUserProfile.get();
+            LOGGER.info("UserProfile: Found user profile with id {} corresponding to user {}.", userProfile.getUserProfileId(), user.getEmail());
         }else{
             userProfile = new UserProfile();
             userProfile.setUser(user);
+            LOGGER.info("UserProfile: Didn't find any profile associated user {}, creating a new one.",user.getEmail());
         }
+
         model.addAttribute("profileToEdit", userProfile);
 
-        LOGGER.info("UserProfile: Displaying user profile.");
+        LOGGER.info("UserProfile: Displaying user profile edit page.");
         return "editProfile";
-
     }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/profile/edit")
-    public String editUserProfile(@ModelAttribute UserProfile profileToEdit){
+    public String editUserProfile(@ModelAttribute UserProfile profileToEdit,
+                                  Model model){
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
 
         User user = null;
         if ( authentication != null ) {
             user = (User) authentication.getPrincipal();
+
             Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
             if (optionalUser.isPresent()) {
                 user = optionalUser.get();
             }
         }
+
+
 
         Optional<UserProfile> optionalUserProfile = userProfileRepository.findByUser(user);
         UserProfile userProfile = optionalUserProfile.get();
@@ -121,15 +126,22 @@ public class UserProfileController {
         userProfile.setFirstName(profileToEdit.getFirstName());
         userProfile.setLastName(profileToEdit.getLastName());
         userProfile.setBio(profileToEdit.getBio());
-        userProfile.setBirthday(profileToEdit.getBirthday());
+
 
 
 //        profileToEdit.setUser(user);
+
+        LOGGER.info("UserProfile - POST method: user with id: {}, userProfile with id: {}", user.getUserId(), userProfile.getUserProfileId());
+
+
         try {
             userProfileService.saveUserProfile(userProfile);
         }catch(Exception ex){
             LOGGER.error("UserProfile: " + ex.getMessage());
         }
+
+        model.addAttribute("user",user);
+        model.addAttribute("profileToEdit", userProfile);
         return "profile";
     }
 

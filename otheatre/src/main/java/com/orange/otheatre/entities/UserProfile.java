@@ -5,6 +5,8 @@
  */
 package com.orange.otheatre.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.*;
@@ -29,7 +31,8 @@ public class UserProfile{
     private String firstName;
     
     private String lastName;
-    
+
+    @DateTimeFormat(pattern = "MM-dd-YYYY")
     private LocalDate birthday;
     
     private String linkToProfilePicture;
