@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import java.util.Optional;
 
 @Controller
@@ -90,7 +89,6 @@ public class UserProfileController {
 
         if(optionalUserProfile.isPresent()){
             userProfile = optionalUserProfile.get();
-
             LOGGER.info("UserProfile: Found user profile with id {} corresponding to user {}.", userProfile.getUserProfileId(), user.getEmail());
         }else{
             userProfile = new UserProfile();
@@ -107,8 +105,6 @@ public class UserProfileController {
     @RequestMapping(method = RequestMethod.PATCH, value = "/profile/edit")
     public String editUserProfile(@ModelAttribute UserProfile profileToEdit,
                                   Model model){
-
-
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
 
@@ -122,6 +118,8 @@ public class UserProfileController {
             }
         }
 
+
+
         Optional<UserProfile> optionalUserProfile = userProfileRepository.findByUser(user);
         UserProfile userProfile = optionalUserProfile.get();
 
@@ -129,7 +127,6 @@ public class UserProfileController {
         userProfile.setLastName(profileToEdit.getLastName());
         userProfile.setBio(profileToEdit.getBio());
 
-        LOGGER.info("UserProfile - Updating profile for user with id: {}, userProfile with id: {}", user.getUserId(), userProfile.getUserProfileId());
 
 //        profileToEdit.setUser(user);
 
@@ -141,7 +138,6 @@ public class UserProfileController {
 
         model.addAttribute("user",user);
         model.addAttribute("profileToEdit", userProfile);
-
         return "profile";
     }
 
