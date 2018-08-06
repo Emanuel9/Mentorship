@@ -54,11 +54,11 @@ public class UserProfileService {
 
         }
         LOGGER.info("User Profile Service: Creating and returning the new profile for user {}.",userProfile.getUser().getEmail());
+
         return userProfileRepository.saveAndFlush(userProfile);
     }
 
     public UserProfile updateUserProfile (UserProfile userProfile) throws Exception {
-
 
         Optional<UserProfile> optionalUserProfile = Optional.empty();
         optionalUserProfile = checkIfProfileExists(userProfile);
@@ -76,11 +76,6 @@ public class UserProfileService {
 
         LOGGER.info("User Profile Service: Checking if profile for user {} exists",userProfile.getUser().getEmail());
         return userProfileRepository.findByUser(userProfile.getUser());
-    }
-
-    public Optional<UserProfile> checkIfProfileExists(User user){
-        LOGGER.info("User Profile Service: Checking if profile for user {} exists",user.getEmail());
-        return userProfileRepository.findByUser(user);
     }
 
     public UserProfile createNewUserProfile(User user){
