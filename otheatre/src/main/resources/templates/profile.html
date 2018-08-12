@@ -11,10 +11,33 @@
 
 <div th:replace="fragments/header :: header">&nbsp;</div>
 
-<div>
+<div class="container">
+    <h2>User profile</h2>
+    <table class="table table-striped">
+        <tr>
+            <th><h3> Users details for: </h3></th>
+            <td th:text = "${user.email}">Username</td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td th:text = "${profileToEdit.firstName}">First Name</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td th:text = "${profileToEdit.lastName}">Last Name</td>
+        </tr>
+        <tr>
+            <th>Bio</th>
+            <td th:text = "${profileToEdit.bio}">Bio</td>
+        </tr>
+        <tr>
+            <th>Birthday</th>
+            <td th:date = "${profileToEdit.birthday}">Birthday</td>
+        </tr>
+    </table>
+</div>
 
-    <p> Users details for: </p>
-    <span th:text="${principal.email}"></span>
+<div><a th:href="@{'/profile/edit'}">Edit profile</a>
 </div>
 
 </body>

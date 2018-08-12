@@ -33,8 +33,6 @@ public class UserProfile{
     
     private String bio;
     
-    private String email;
-    
     private String firstName;
     
     private String lastName;
@@ -53,19 +51,6 @@ public class UserProfile{
     private List<Comment>comments;
 
     public UserProfile() {
-    }
-
-    public UserProfile(User user, String bio, String email, String firstName, String lastName, LocalDate birthday, String linkToProfilePicture, List<Event> eventsAttended, List<Review> reviews, List<Comment> comments) {
-        this.user = user;
-        this.bio = bio;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.linkToProfilePicture = linkToProfilePicture;
-        this.eventsAttended = eventsAttended;
-        this.reviews = reviews;
-        this.comments = comments;
     }
 
     public Integer getUserProfileId() {
@@ -90,14 +75,6 @@ public class UserProfile{
 
     public void setBio(String bio) {
         this.bio = bio;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getFirstName() {
