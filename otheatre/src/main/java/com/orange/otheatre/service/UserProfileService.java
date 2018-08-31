@@ -1,16 +1,12 @@
 package com.orange.otheatre.service;
 
 import com.orange.otheatre.entities.*;
-import com.orange.otheatre.repositories.CommentRepository;
 import com.orange.otheatre.repositories.UserProfileRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,6 +46,7 @@ public class UserProfileService {
 
     public UserProfile saveUserProfile(UserProfile userProfile){
 
+
         Optional<UserProfile> optionalUserProfile = Optional.empty();
         optionalUserProfile = checkIfProfileExists(userProfile);
         if(optionalUserProfile.isPresent()){
@@ -58,6 +55,7 @@ public class UserProfileService {
 
         }
         LOGGER.info("User Profile Service: Creating and returning the new profile for user {}.",userProfile.getUser().getEmail());
+
         return userProfileRepository.saveAndFlush(userProfile);
     }
 
@@ -69,18 +67,16 @@ public class UserProfileService {
         if(!optionalUserProfile.isPresent()){
             throw new Exception("Cannot update a profile that does not exist!");
         }
+
         LOGGER.info("User Profile Service: Returning the updated profile for user {}.",userProfile.getUser().getEmail());
+
         return userProfileRepository.saveAndFlush(userProfile);
     }
 
     private Optional<UserProfile> checkIfProfileExists(UserProfile userProfile){
+
         LOGGER.info("User Profile Service: Checking if profile for user {} exists",userProfile.getUser().getEmail());
         return userProfileRepository.findByUser(userProfile.getUser());
-    }
-
-    public Optional<UserProfile> checkIfProfileExists(User user){
-        LOGGER.info("User Profile Service: Checking if profile for user {} exists",user.getEmail());
-        return userProfileRepository.findByUser(user);
     }
 
     public UserProfile createNewUserProfile(User user){
@@ -102,4 +98,5 @@ public class UserProfileService {
         LOGGER.info("User Profile Service: Returning profile for user {}",user.getEmail());
         return saveUserProfile(userProfile);
     }
+
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<!--<div>-->
+    <!--<p> Users details for: </p>-->
+    <!--<p><span>Username: </span><span th:text="${user.email}"></span></p>-->
+    <!--<p><span>First Name: </span><span th:text="${profileToEdit.firstName}"></span></p>-->
+    <!--<p><span>Last Name: </span><span th:text="${profileToEdit.lastName}"></span></p>-->
+    <!--<p><span>Bio: </span><span th:text="${profileToEdit.bio}"></span></p>-->
+    <!--<p><span>Birthday: </span><span th:text="${profileToEdit.birthday}"></span></p>-->
+<!--</div>-->
+
+<div class="container">
+    <h2>Event details</h2>
+    <form action="#" th:action="@{/profile/edit}" th:object="${profileToEdit}" th:method="PATCH">
+    <table class="table table-striped">
+        <tr>
+            <th><h3> Users details for: </h3></th>
+            <td th:text = "${user.email}">Username</td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td><input type="text" th:field="*{firstName}" value="${profileToEdit.firstName}"/></td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td><input type="text" th:field="*{lastName}" value="${profileToEdit.lastName}"/></td>
+        </tr>
+        <tr>
+            <th>Bio</th>
+            <td><input type="text" th:field="*{bio}" value="${profileToEdit.bio}"/></td>
+        </tr>
+
+        <tr><input type="submit" value="Save changes"/></tr>
+    </table>
+    </form>
+</div>
+
+</body>
+</html>
