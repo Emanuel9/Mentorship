@@ -1,21 +1,8 @@
-console.log("Gaseste fisierul")
-//
-/////* 
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
-//
-//window.alert(123)
-const registerButton = $("#register_button");
-const password = $("#password");
-const password_confirmation = $("#password_confirmation");
-
-registerButton.click(function(event){
-    event.preventDefault();
-    if(password !== password_confirmation){
-        window.alert("Passwords do not match!");
-    }
-
-});
-
+function check(input) {
+ if (input.value != document.getElementById('password').value) {
+ input.setCustomValidity('Confirmation password is not the same as the password.');
+ } else {
+ // input is valid -- reset the error message
+ input.setCustomValidity('');
+ }
+ }
