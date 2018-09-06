@@ -117,7 +117,7 @@
 				<artifactId>appengine-maven-plugin</artifactId>
 				<version>1.9.64</version>
 			</plugin>
-			<plugin>
+			<!--<plugin>
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>appengine-maven-plugin</artifactId>
 				<version>0.1.2</version>
@@ -127,7 +127,7 @@
 						<param>${project.build.directory}/appengine-staging/cron.yaml</param>
 					</deployables>
 				</configuration>
-			</plugin>
+			</plugin>-->
 		</plugins>
 	</build>
 </project>
