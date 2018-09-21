@@ -5,6 +5,7 @@
  */
 package com.orange.otheatre.entities;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 
@@ -14,7 +15,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "hall")
-public class Hall {
+public class Hall implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -3,16 +3,18 @@
 
 -- --------------------------------------------------------
 
+
 --
 -- Structura de tabel pentru tabelul `comment`
 --
 
+DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
   `comment_id` int(11) NOT NULL,
   `user_comment` varchar(255) DEFAULT NULL,
   `comment_creator_user_profile_id` int(11) DEFAULT NULL,
   `event_event_id` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- --------------------------------------------------------
@@ -21,6 +23,7 @@ CREATE TABLE `comment` (
 -- Structura de tabel pentru tabelul `event`
 --
 
+DROP TABLE IF EXISTS `event`;
 CREATE TABLE `event` (
   `event_id` bigint(20) NOT NULL,
   `event_description` varchar(255) NOT NULL,
@@ -28,7 +31,7 @@ CREATE TABLE `event` (
   `event_start_date` datetime NOT NULL,
   `event_title` varchar(255) NOT NULL,
   `user_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- --------------------------------------------------------
@@ -37,10 +40,11 @@ CREATE TABLE `event` (
 -- Structura de tabel pentru tabelul `event_hall`
 --
 
+DROP TABLE IF EXISTS `event_hall`;
 CREATE TABLE `event_hall` (
   `event_id` bigint(20) NOT NULL,
   `hall_id` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -48,10 +52,11 @@ CREATE TABLE `event_hall` (
 -- Structura de tabel pentru tabelul `event_participants`
 --
 
+DROP TABLE IF EXISTS `event_participants`;
 CREATE TABLE `event_participants` (
   `events_attended_event_id` bigint(20) NOT NULL,
   `participants_user_profile_id` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -59,12 +64,13 @@ CREATE TABLE `event_participants` (
 -- Structura de tabel pentru tabelul `hall`
 --
 
+DROP TABLE IF EXISTS `hall`;
 CREATE TABLE `hall` (
   `hall_id` int(11) NOT NULL,
   `hall_name` varchar(255) DEFAULT NULL,
   `number_of_rows` int(11) DEFAULT NULL,
   `number_of_seats_per_row` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Salvarea datelor din tabel `hall`
@@ -81,9 +87,10 @@ INSERT INTO `hall` (`hall_id`, `hall_name`, `number_of_rows`, `number_of_seats_p
 -- Structura de tabel pentru tabelul `hibernate_sequence`
 --
 
+DROP TABLE IF EXISTS `hibernate_sequence`;
 CREATE TABLE `hibernate_sequence` (
   `next_val` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Salvarea datelor din tabel `hibernate_sequence`
@@ -103,13 +110,14 @@ INSERT INTO `hibernate_sequence` (`next_val`) VALUES
 -- Structura de tabel pentru tabelul `review`
 --
 
+DROP TABLE IF EXISTS `review`;
 CREATE TABLE `review` (
   `id` int(11) NOT NULL,
   `user_score` int(11) DEFAULT NULL,
   `written_review` varchar(255) DEFAULT NULL,
   `event_event_id` bigint(20) DEFAULT NULL,
   `review_creator_user_profile_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -117,12 +125,13 @@ CREATE TABLE `review` (
 -- Structura de tabel pentru tabelul `seat`
 --
 
+DROP TABLE IF EXISTS `seat`;
 CREATE TABLE `seat` (
   `seat_id` int(11) NOT NULL,
   `row_number` int(11) DEFAULT NULL,
   `seat_number` int(11) DEFAULT NULL,
   `hall_hall_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -130,12 +139,13 @@ CREATE TABLE `seat` (
 -- Structura de tabel pentru tabelul `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Salvarea datelor din tabel `user`
@@ -150,6 +160,7 @@ INSERT INTO `user` (`user_id`, `email`, `password`, `role`) VALUES
 -- Structura de tabel pentru tabelul `user_profile`
 --
 
+DROP TABLE IF EXISTS `user_profile`;
 CREATE TABLE `user_profile` (
   `user_profile_id` int(11) NOT NULL,
   `bio` varchar(255) DEFAULT NULL,
@@ -159,7 +170,7 @@ CREATE TABLE `user_profile` (
   `last_name` varchar(255) DEFAULT NULL,
   `link_to_profile_picture` varchar(255) DEFAULT NULL,
   `user_user_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -167,10 +178,11 @@ CREATE TABLE `user_profile` (
 -- Structura de tabel pentru tabelul `user_profile_comments`
 --
 
+DROP TABLE IF EXISTS `user_profile_comments`;
 CREATE TABLE `user_profile_comments` (
   `user_profile_user_profile_id` int(11) NOT NULL,
   `comments_comment_id` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -178,10 +190,11 @@ CREATE TABLE `user_profile_comments` (
 -- Structura de tabel pentru tabelul `user_profile_reviews`
 --
 
+DROP TABLE IF EXISTS `user_profile_reviews`;
 CREATE TABLE `user_profile_reviews` (
   `user_profile_user_profile_id` int(11) NOT NULL,
   `reviews_id` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
@@ -274,5 +287,5 @@ ALTER TABLE `user_profile_reviews`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;COMMIT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 

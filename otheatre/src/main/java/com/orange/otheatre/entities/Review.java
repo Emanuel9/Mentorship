@@ -8,10 +8,11 @@ package com.orange.otheatre.entities;
 import com.orange.otheatre.model.Mark;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "review")
-public class Review {
+public class Review implements Serializable {
 
     @Id
     @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)

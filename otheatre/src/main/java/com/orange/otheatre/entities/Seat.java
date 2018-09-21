@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  *
@@ -22,7 +23,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "seat")
-public class Seat {
+public class Seat implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

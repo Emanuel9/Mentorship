@@ -7,6 +7,7 @@ package com.orange.otheatre.entities;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.*;
@@ -17,7 +18,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "user_profile")
-public class UserProfile{
+public class UserProfile implements Serializable  {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
