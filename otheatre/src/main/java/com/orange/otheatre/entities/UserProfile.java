@@ -5,16 +5,11 @@
  */
 package com.orange.otheatre.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  *
@@ -27,18 +22,17 @@ public class UserProfile{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userProfileId;
-    
+
     @OneToOne
     private User user;
     
     private String bio;
     
-    private String email;
-    
     private String firstName;
     
     private String lastName;
-    
+
+    @DateTimeFormat(pattern = "MM-dd-YYYY")
     private LocalDate birthday;
     
     private String linkToProfilePicture;
@@ -53,19 +47,6 @@ public class UserProfile{
     private List<Comment>comments;
 
     public UserProfile() {
-    }
-
-    public UserProfile(User user, String bio, String email, String firstName, String lastName, LocalDate birthday, String linkToProfilePicture, List<Event> eventsAttended, List<Review> reviews, List<Comment> comments) {
-        this.user = user;
-        this.bio = bio;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.linkToProfilePicture = linkToProfilePicture;
-        this.eventsAttended = eventsAttended;
-        this.reviews = reviews;
-        this.comments = comments;
     }
 
     public Integer getUserProfileId() {
@@ -90,14 +71,6 @@ public class UserProfile{
 
     public void setBio(String bio) {
         this.bio = bio;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getFirstName() {
